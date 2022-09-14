@@ -652,6 +652,9 @@ AM_CPPFLAGS = $(all_includes)
 
 suricata_SOURCES = main.c $(COMMON_SOURCES)
 
+lib_LIBRARIES = libsuricata.la
+libsuricata_la_SOURCES = $(COMMON_SOURCES)
+
 # the library search path.
 suricata_LDFLAGS = $(all_libraries) ${SECLDFLAGS}
 suricata_LDADD = $(HTP_LDADD) $(RUST_LDADD)

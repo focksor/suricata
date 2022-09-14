@@ -4,6 +4,7 @@ version = "@PACKAGE_VERSION@"
 edition = "2018"
 
 [lib]
+name = "suricata_rs"
 crate-type = ["staticlib", "rlib"]
 path = "@e_rustdir@/src/lib.rs"
 

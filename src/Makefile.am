@@ -5,13 +5,13 @@ noinst_HEADERS = action-globals.h \
 	source-windivert-prototypes.h \
 	suricata-common.h threadvars.h tree.h \
     util-validate.h
-bin_PROGRAMS = suricata
-if BUILD_FUZZTARGETS
-    bin_PROGRAMS += fuzz_applayerprotodetectgetproto \
-    fuzz_applayerparserparse fuzz_siginit \
-    fuzz_confyamlloadstring fuzz_decodepcapfile \
-    fuzz_sigpcap fuzz_mimedecparseline
-endif
+# bin_PROGRAMS = suricata
+# if BUILD_FUZZTARGETS
+#     bin_PROGRAMS += fuzz_applayerprotodetectgetproto \
+#     fuzz_applayerparserparse fuzz_siginit \
+#     fuzz_confyamlloadstring fuzz_decodepcapfile \
+#     fuzz_sigpcap fuzz_mimedecparseline
+# endif
 
 COMMON_SOURCES = \
 alert-debuglog.c alert-debuglog.h \
@@ -650,15 +650,15 @@ EXTRA_DIST = \
 # set the include path found by configure
 AM_CPPFLAGS = $(all_includes)
 
-suricata_SOURCES = main.c $(COMMON_SOURCES)
+lib_LTLIBRARIES = libsuricata.la
+libsuricata_la_SOURCES = $(COMMON_SOURCES)
+libsuricata_la_LDFLAGS = $(all_libraries) ${SECLDFLAGS} -module -avoid-version -shared
 
-lib_LIBRARIES = libsuricata.a
-libsuricata_a_SOURCES = $(COMMON_SOURCES)
-
-# the library search path.
-suricata_LDFLAGS = $(all_libraries) ${SECLDFLAGS}
-suricata_LDADD = $(HTP_LDADD) $(RUST_LDADD)
-suricata_DEPENDENCIES = $(RUST_SURICATA_LIB)
+# suricata_SOURCES = main.c $(COMMON_SOURCES)
+# # the library search path.
+# suricata_LDFLAGS = $(all_libraries) ${SECLDFLAGS}
+# suricata_LDADD = $(HTP_LDADD) $(RUST_LDADD)
+# suricata_DEPENDENCIES = $(RUST_SURICATA_LIB)
 
 if BUILD_FUZZTARGETS
 nodist_fuzz_applayerprotodetectgetproto_SOURCES = tests/fuzz/fuzz_applayerprotodetectgetproto.c $(COMMON_SOURCES)
